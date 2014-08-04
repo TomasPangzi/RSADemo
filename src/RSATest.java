@@ -2,38 +2,37 @@ import java.security.NoSuchAlgorithmException;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.util.HashMap;
-import java.util.logging.Logger;
 
 public class RSATest {
 
 	/**
 	 * @param args
-	 * @throws NoSuchAlgorithmException 
+	 * @throws NoSuchAlgorithmException
 	 */
 	public static void main(String[] args) throws NoSuchAlgorithmException {
 		// TODO Auto-generated method stub
 
 		HashMap<String, Object> map = RSAUtils.getKeys();
-		// Éú³É¹«Ô¿ºÍË½Ô¿
+		// ç”Ÿæˆå…¬é’¥å’Œç§é’¥
 		RSAPublicKey publicKey = (RSAPublicKey) map.get("public");
 		RSAPrivateKey privateKey = (RSAPrivateKey) map.get("private");
 
-		// Ä£
+		// æ¨¡
 		String modulus = publicKey.getModulus().toString();
-		System.out.print("modulus----"+modulus+"\n");
-		// ¹«Ô¿Ö¸Êı
+		System.out.print("modulus----" + modulus + "\n");
+		// å…¬é’¥æŒ‡æ•°
 		String public_exponent = publicKey.getPublicExponent().toString();
-		System.out.print("public_exponent----"+public_exponent+"\n");
-		// Ë½Ô¿Ö¸Êı
+		System.out.print("public_exponent----" + public_exponent + "\n");
+		// ç§é’¥æŒ‡æ•°
 		String private_exponent = privateKey.getPrivateExponent().toString();
-		System.out.print("private_exponent----"+private_exponent+"\n");
-		// Ã÷ÎÄ
+		System.out.print("private_exponent----" + private_exponent + "\n");
+		// æ˜æ–‡
 		String ming = "123456789";
-		// Ê¹ÓÃÄ£ºÍÖ¸ÊıÉú³É¹«Ô¿ºÍË½Ô¿
+		// ä½¿ç”¨æ¨¡å’ŒæŒ‡æ•°ç”Ÿæˆå…¬é’¥å’Œç§é’¥
 		RSAPublicKey pubKey = RSAUtils.getPublicKey(modulus, public_exponent);
 		RSAPrivateKey priKey = RSAUtils
 				.getPrivateKey(modulus, private_exponent);
-		
+
 	}
 
 }

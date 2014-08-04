@@ -1,6 +1,3 @@
-
-
-
 import java.math.BigInteger;
 import java.security.KeyFactory;
 import java.security.KeyPair;
@@ -17,30 +14,33 @@ import javax.crypto.Cipher;
 public class RSAUtils {
 
 	/**
-	 * Éú³É¹«Ô¿ºÍË½Ô¿
-	 * @throws NoSuchAlgorithmException 
-	 *
+	 * ç”Ÿæˆå…¬é’¥å’Œç§é’¥
+	 * 
+	 * @throws NoSuchAlgorithmException
+	 * 
 	 */
-	public static HashMap<String, Object> getKeys() throws NoSuchAlgorithmException{
+	public static HashMap<String, Object> getKeys()
+			throws NoSuchAlgorithmException {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance("RSA");
-        keyPairGen.initialize(1024);
-        KeyPair keyPair = keyPairGen.generateKeyPair();
-        RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
-        RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();
-        map.put("public", publicKey);
-        map.put("private", privateKey);
-        return map;
+		keyPairGen.initialize(1024);
+		KeyPair keyPair = keyPairGen.generateKeyPair();
+		RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
+		RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();
+		map.put("public", publicKey);
+		map.put("private", privateKey);
+		return map;
 	}
+
 	/**
-	 * Ê¹ÓÃÄ£ºÍÖ¸ÊıÉú³ÉRSA¹«Ô¿
-	 * ×¢Òâ£º¡¾´Ë´úÂëÓÃÁËÄ¬ÈÏ²¹Î»·½Ê½£¬ÎªRSA/None/PKCS1Padding£¬²»Í¬JDKÄ¬ÈÏµÄ²¹Î»·½Ê½¿ÉÄÜ²»Í¬£¬ÈçAndroidÄ¬ÈÏÊÇRSA
-	 * /None/NoPadding¡¿
+	 * ä½¿ç”¨æ¨¡å’ŒæŒ‡æ•°ç”ŸæˆRSAå…¬é’¥
+	 * æ³¨æ„ï¼šã€æ­¤ä»£ç ç”¨äº†é»˜è®¤è¡¥ä½æ–¹å¼ï¼Œä¸ºRSA/None/PKCS1Paddingï¼Œä¸åŒJDKé»˜è®¤çš„è¡¥ä½æ–¹å¼å¯èƒ½ä¸åŒï¼Œå¦‚Androidé»˜è®¤æ˜¯RSA
+	 * /None/NoPaddingã€‘
 	 * 
 	 * @param modulus
-	 *            Ä£
+	 *            æ¨¡
 	 * @param exponent
-	 *            Ö¸Êı
+	 *            æŒ‡æ•°
 	 * @return
 	 */
 	public static RSAPublicKey getPublicKey(String modulus, String exponent) {
@@ -57,14 +57,14 @@ public class RSAUtils {
 	}
 
 	/**
-	 * Ê¹ÓÃÄ£ºÍÖ¸ÊıÉú³ÉRSAË½Ô¿
-	 * ×¢Òâ£º¡¾´Ë´úÂëÓÃÁËÄ¬ÈÏ²¹Î»·½Ê½£¬ÎªRSA/None/PKCS1Padding£¬²»Í¬JDKÄ¬ÈÏµÄ²¹Î»·½Ê½¿ÉÄÜ²»Í¬£¬ÈçAndroidÄ¬ÈÏÊÇRSA
-	 * /None/NoPadding¡¿
+	 * ä½¿ç”¨æ¨¡å’ŒæŒ‡æ•°ç”ŸæˆRSAç§é’¥
+	 * æ³¨æ„ï¼šã€æ­¤ä»£ç ç”¨äº†é»˜è®¤è¡¥ä½æ–¹å¼ï¼Œä¸ºRSA/None/PKCS1Paddingï¼Œä¸åŒJDKé»˜è®¤çš„è¡¥ä½æ–¹å¼å¯èƒ½ä¸åŒï¼Œå¦‚Androidé»˜è®¤æ˜¯RSA
+	 * /None/NoPaddingã€‘
 	 * 
 	 * @param modulus
-	 *            Ä£
+	 *            æ¨¡
 	 * @param exponent
-	 *            Ö¸Êı
+	 *            æŒ‡æ•°
 	 * @return
 	 */
 	public static RSAPrivateKey getPrivateKey(String modulus, String exponent) {
@@ -81,7 +81,7 @@ public class RSAUtils {
 	}
 
 	/**
-	 * ¹«Ô¿¼ÓÃÜ
+	 * å…¬é’¥åŠ å¯†
 	 * 
 	 * @param data
 	 * @param publicKey
@@ -92,12 +92,12 @@ public class RSAUtils {
 			throws Exception {
 		Cipher cipher = Cipher.getInstance("RSA");
 		cipher.init(Cipher.ENCRYPT_MODE, publicKey);
-		// Ä£³¤
+		// æ¨¡é•¿
 		int key_len = publicKey.getModulus().bitLength() / 8;
-		// ¼ÓÃÜÊı¾İ³¤¶È <= Ä£³¤-11
+		// åŠ å¯†æ•°æ®é•¿åº¦ <= æ¨¡é•¿-11
 		String[] datas = splitString(data, key_len - 11);
 		String mi = "";
-		//Èç¹ûÃ÷ÎÄ³¤¶È´óÓÚÄ£³¤-11ÔòÒª·Ö×é¼ÓÃÜ
+		// å¦‚æœæ˜æ–‡é•¿åº¦å¤§äºæ¨¡é•¿-11åˆ™è¦åˆ†ç»„åŠ å¯†
 		for (String s : datas) {
 			mi += bcd2Str(cipher.doFinal(s.getBytes()));
 		}
@@ -105,32 +105,33 @@ public class RSAUtils {
 	}
 
 	/**
-	 * Ë½Ô¿½âÃÜ
+	 * ç§é’¥è§£å¯†
 	 * 
 	 * @param data
 	 * @param privateKey
 	 * @return
 	 * @throws Exception
 	 */
-	public static String decryptByPrivateKey(String data, RSAPrivateKey privateKey)
-			throws Exception {
+	public static String decryptByPrivateKey(String data,
+			RSAPrivateKey privateKey) throws Exception {
 		Cipher cipher = Cipher.getInstance("RSA");
 		cipher.init(Cipher.DECRYPT_MODE, privateKey);
-		//Ä£³¤
+		// æ¨¡é•¿
 		int key_len = privateKey.getModulus().bitLength() / 8;
 		byte[] bytes = data.getBytes();
 		byte[] bcd = ASCII_To_BCD(bytes, bytes.length);
 		System.err.println(bcd.length);
-		//Èç¹ûÃÜÎÄ³¤¶È´óÓÚÄ£³¤ÔòÒª·Ö×é½âÃÜ
+		// å¦‚æœå¯†æ–‡é•¿åº¦å¤§äºæ¨¡é•¿åˆ™è¦åˆ†ç»„è§£å¯†
 		String ming = "";
 		byte[][] arrays = splitArray(bcd, key_len);
-		for(byte[] arr : arrays){
+		for (byte[] arr : arrays) {
 			ming += new String(cipher.doFinal(arr));
 		}
 		return ming;
 	}
+
 	/**
-	 * ASCIIÂë×ªBCDÂë
+	 * ASCIIç è½¬BCDç 
 	 * 
 	 */
 	public static byte[] ASCII_To_BCD(byte[] ascii, int asc_len) {
@@ -142,6 +143,7 @@ public class RSAUtils {
 		}
 		return bcd;
 	}
+
 	public static byte asc_to_bcd(byte asc) {
 		byte bcd;
 
@@ -155,8 +157,9 @@ public class RSAUtils {
 			bcd = (byte) (asc - 48);
 		return bcd;
 	}
+
 	/**
-	 * BCD×ª×Ö·û´®
+	 * BCDè½¬å­—ç¬¦ä¸²
 	 */
 	public static String bcd2Str(byte[] bytes) {
 		char temp[] = new char[bytes.length * 2], val;
@@ -170,8 +173,9 @@ public class RSAUtils {
 		}
 		return new String(temp);
 	}
+
 	/**
-	 * ²ğ·Ö×Ö·û´®
+	 * æ‹†åˆ†å­—ç¬¦ä¸²
 	 */
 	public static String[] splitString(String string, int len) {
 		int x = string.length() / len;
@@ -182,34 +186,35 @@ public class RSAUtils {
 		}
 		String[] strings = new String[x + z];
 		String str = "";
-		for (int i=0; i<x+z; i++) {
-			if (i==x+z-1 && y!=0) {
-				str = string.substring(i*len, i*len+y);
-			}else{
-				str = string.substring(i*len, i*len+len);
+		for (int i = 0; i < x + z; i++) {
+			if (i == x + z - 1 && y != 0) {
+				str = string.substring(i * len, i * len + y);
+			} else {
+				str = string.substring(i * len, i * len + len);
 			}
 			strings[i] = str;
 		}
 		return strings;
 	}
+
 	/**
-	 *²ğ·ÖÊı×é 
+	 * æ‹†åˆ†æ•°ç»„
 	 */
-	public static byte[][] splitArray(byte[] data,int len){
+	public static byte[][] splitArray(byte[] data, int len) {
 		int x = data.length / len;
 		int y = data.length % len;
 		int z = 0;
-		if(y!=0){
+		if (y != 0) {
 			z = 1;
 		}
-		byte[][] arrays = new byte[x+z][];
+		byte[][] arrays = new byte[x + z][];
 		byte[] arr;
-		for(int i=0; i<x+z; i++){
+		for (int i = 0; i < x + z; i++) {
 			arr = new byte[len];
-			if(i==x+z-1 && y!=0){
-				System.arraycopy(data, i*len, arr, 0, y);
-			}else{
-				System.arraycopy(data, i*len, arr, 0, len);
+			if (i == x + z - 1 && y != 0) {
+				System.arraycopy(data, i * len, arr, 0, y);
+			} else {
+				System.arraycopy(data, i * len, arr, 0, len);
 			}
 			arrays[i] = arr;
 		}
